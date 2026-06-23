@@ -37,9 +37,9 @@
     "github": "https://github.com/if-uri"
   },
   "routes": [
-    "doc://host/file/query/text",
+    "doc://host/engine/query/list",
     "doc://host/file/query/ocr",
-    "doc://host/engine/query/list"
+    "doc://host/file/query/text"
   ],
   "useCases": [
     "Extract the text layer of a PDF inside a flow.",
@@ -67,5 +67,8 @@
   "install": {
     "mode": "urirun-extra",
     "pipSpec": "urirun-connector-doc @ git+https://github.com/if-uri/urirun-connector-doc.git@v0.1.0"
-  }
+  },
+  "adapterKinds": [
+    "local-function"
+  ]
 }
