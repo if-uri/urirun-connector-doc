@@ -1,0 +1,12 @@
+{
+  "id": "doc",
+  "name": "Document text / OCR",
+  "uriSchemes": ["doc"],
+  "status": "available",
+  "category": "Documents",
+  "summary": "Extract text from PDFs and images over doc:// URIs. Text-layer PDFs use pdftotext; scans/images fall back through an OCR chain (tesseract, RapidOCR/ONNX from wronai-img2nl, or an Ollama vision model from wronai-ocr). Degrades gracefully to pdftotext-only.",
+  "description": "doc:// turns document text extraction into a first-class URI instead of ad-hoc shell + pdftotext. doc://host/file/query/text returns the text of a PDF or image: a text-layer PDF goes through poppler pdftotext; a scan/image falls back to OCR, rasterising PDF pages (pdftoppm/pdfimages/magick) and running the first available engine — tesseract, then RapidOCR (the ONNX engine reused from wronai/img2nl, no system binary needed), then an Ollama vision model (reused from wronai/ocr). doc://host/file/query/ocr forces OCR; doc://host/engine/query/list reports which engines are present. Useful for classifying invoices and any scanned document over the mesh.",
+  "requires": {"system": ["pdftotext (poppler) recommended; pdftoppm/pdfimages/magick for OCR rasterisation"], "python": ["urirun"], "optional": ["rapidocr-onnxruntime or img2nl for no-tesseract OCR", "tesseract", "ollama"]},
+  "keywords": ["ocr", "pdf", "pdftotext", "rapidocr", "tesseract", "invoice", "document", "text"],
+  "publisher": "if-uri"
+}

@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "urirun-connector-doc"
+version = "0.1.0"
+description = "Document text / OCR connector for ifuri and urirun (doc://)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "Apache-2.0"
+authors = [{ name = "if-uri" }]
+dependencies = ["urirun>=0.4.14"]
+
+[project.optional-dependencies]
+ocr = ["rapidocr-onnxruntime>=1.3", "pillow>=10"]
+test = ["pytest>=8"]
+
+[project.urls]
+Homepage = "https://connect.ifuri.com/connectors/doc"
+Repository = "https://github.com/if-uri/urirun-connector-doc"
+
+[project.scripts]
+urirun-doc = "urirun_connector_doc.core:main"
+
+[project.entry-points."urirun.bindings"]
+doc = "urirun_connector_doc.core:urirun_bindings"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["urirun_connector_doc*"]
+
+[tool.setuptools.package-data]
+urirun_connector_doc = ["connector.manifest.json"]
