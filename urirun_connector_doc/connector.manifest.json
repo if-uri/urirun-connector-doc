@@ -1,12 +1,71 @@
 {
   "id": "doc",
   "name": "Document text / OCR",
-  "uriSchemes": ["doc"],
+  "uriSchemes": [
+    "doc"
+  ],
   "status": "available",
   "category": "Documents",
   "summary": "Extract text from PDFs and images over doc:// URIs. Text-layer PDFs use pdftotext; scans/images fall back through an OCR chain (tesseract, RapidOCR/ONNX from wronai-img2nl, or an Ollama vision model from wronai-ocr). Degrades gracefully to pdftotext-only.",
   "description": "doc:// turns document text extraction into a first-class URI instead of ad-hoc shell + pdftotext. doc://host/file/query/text returns the text of a PDF or image: a text-layer PDF goes through poppler pdftotext; a scan/image falls back to OCR, rasterising PDF pages (pdftoppm/pdfimages/magick) and running the first available engine — tesseract, then RapidOCR (the ONNX engine reused from wronai/img2nl, no system binary needed), then an Ollama vision model (reused from wronai/ocr). doc://host/file/query/ocr forces OCR; doc://host/engine/query/list reports which engines are present. Useful for classifying invoices and any scanned document over the mesh.",
-  "requires": {"system": ["pdftotext (poppler) recommended; pdftoppm/pdfimages/magick for OCR rasterisation"], "python": ["urirun"], "optional": ["rapidocr-onnxruntime or img2nl for no-tesseract OCR", "tesseract", "ollama"]},
-  "keywords": ["ocr", "pdf", "pdftotext", "rapidocr", "tesseract", "invoice", "document", "text"],
-  "publisher": "if-uri"
+  "requires": {
+    "system": [
+      "pdftotext (poppler) recommended; pdftoppm/pdfimages/magick for OCR rasterisation"
+    ],
+    "python": [
+      "urirun"
+    ],
+    "optional": [
+      "rapidocr-onnxruntime or img2nl for no-tesseract OCR",
+      "tesseract",
+      "ollama"
+    ]
+  },
+  "keywords": [
+    "ocr",
+    "pdf",
+    "pdftotext",
+    "rapidocr",
+    "tesseract",
+    "invoice",
+    "document",
+    "text"
+  ],
+  "publisher": {
+    "name": "if-uri",
+    "url": "https://ifuri.com",
+    "github": "https://github.com/if-uri"
+  },
+  "routes": [
+    "doc://host/file/query/text",
+    "doc://host/file/query/ocr",
+    "doc://host/engine/query/list"
+  ],
+  "useCases": [
+    "Extract the text layer of a PDF inside a flow.",
+    "OCR a scanned invoice or image that has no text layer.",
+    "Check which OCR engines are available on a node."
+  ],
+  "examples": [
+    {
+      "title": "Get document text",
+      "uri": "doc://host/file/query/text",
+      "payload": {
+        "path": "/docs/umowa.pdf"
+      }
+    },
+    {
+      "title": "Force OCR on a scan",
+      "uri": "doc://host/file/query/ocr",
+      "payload": {
+        "path": "/scans/faktura.png"
+      }
+    }
+  ],
+  "provenance": "verified",
+  "docsUrl": "https://github.com/if-uri/urirun-connector-doc",
+  "install": {
+    "mode": "urirun-extra",
+    "pipSpec": "urirun-connector-doc @ git+https://github.com/if-uri/urirun-connector-doc.git@v0.1.0"
+  }
 }
