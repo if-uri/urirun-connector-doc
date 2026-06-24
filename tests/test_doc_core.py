@@ -24,6 +24,8 @@ def test_text_from_plain_file(tmp_path):
     r = c.file_text(path=str(p))
     assert r["ok"] and r["engine"] == "raw"
     assert "Faktura FV 7/2026" in r["text"]
+    # Shared urirun.tag contract: extracted text is a frozen artifact.
+    assert r["kind"] == "text" and r["live"] is False
 
 
 def test_missing_file():

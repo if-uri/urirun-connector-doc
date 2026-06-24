@@ -154,8 +154,8 @@ def file_text(path: str = "", ocr: str = "auto", min_text: int = 40, dpi: int = 
             return {"ok": False, "error": str(exc), "path": path}
     if max_chars and len(text) > max_chars:
         text = text[:max_chars]
-    return {"ok": bool(text.strip()), "connector": CONNECTOR_ID, "path": path,
-            "ext": ext, "engine": engine, "chars": len(text), "text": text}
+    return urirun.tag({"ok": bool(text.strip()), "connector": CONNECTOR_ID, "path": path,
+                       "ext": ext, "engine": engine, "chars": len(text), "text": text}, "text")
 
 
 @DOC.handler("file/query/ocr", isolated=True,
