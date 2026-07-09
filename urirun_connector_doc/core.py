@@ -19,8 +19,10 @@ from typing import Any
 
 import urirun
 
+from . import _urirun_compat
+
 CONNECTOR_ID = "doc"
-DOC = urirun.connector(CONNECTOR_ID, scheme="doc", target="host", meta={"label": "Document text / OCR"})
+DOC = _urirun_compat.connector(CONNECTOR_ID, scheme="doc", target="host", meta={"label": "Document text / OCR"})
 
 _IMAGE_EXTS = (".png", ".jpg", ".jpeg", ".tif", ".tiff", ".bmp", ".webp", ".gif")
 
@@ -182,9 +184,28 @@ def engines() -> dict[str, Any]:
                        "rapidocr": have("rapidocr_onnxruntime") or have("img2nl"),
                        "ollama": bool(shutil.which("ollama"))}}
 
+@DOC.handler("doc://host/doctor/query/report", isolated=True, meta={"label": "Connector readiness report"})
+def doctor() -> dict[str, Any]:
+    """Return a safe, read-only connector readiness report for CI smoke tests."""
+    return {
+        "ok": True,
+        "connector": CONNECTOR_ID,
+        "version": _connector_version(),
+        "status": "ready",
+    }
+
+
+def _connector_version() -> str:
+    try:
+        from importlib.metadata import version
+
+        return version("urirun-connector-doc")
+    except Exception:
+        return "0.1.0"
+
 
 def main(argv: list[str] | None = None) -> int:
-    return DOC.cli(argv, manifest_prose=urirun.load_manifest(__package__))
+    return DOC.cli(argv, manifest_prose=_urirun_compat.load_manifest(__package__))
 
 
 urirun_bindings = DOC.bindings
