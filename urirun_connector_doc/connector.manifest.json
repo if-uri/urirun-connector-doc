@@ -37,6 +37,7 @@
     "github": "https://github.com/if-uri"
   },
   "routes": [
+    "doc://host/doctor/query/report",
     "doc://host/engine/query/list",
     "doc://host/file/query/ocr",
     "doc://host/file/query/text"

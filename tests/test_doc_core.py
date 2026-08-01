@@ -5,7 +5,8 @@ import urirun_connector_doc.core as c
 def test_bindings_valid():
     b = c.urirun_bindings()
     assert set(b["bindings"]) == {
-        "doc://host/file/query/text", "doc://host/file/query/ocr", "doc://host/engine/query/list"}
+        "doc://host/doctor/query/report", "doc://host/file/query/text",
+        "doc://host/file/query/ocr", "doc://host/engine/query/list"}
     # the **kw schema bug must stay fixed: engines() takes no required props
     eng = b["bindings"]["doc://host/engine/query/list"]["inputSchema"]
     assert not eng.get("required")
